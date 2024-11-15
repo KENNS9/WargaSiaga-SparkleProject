@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warga Siaga</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Halaman Loading -->
+    <div id="loading-screen">
+        <div class="overlay"></div>
+        <div class="logo">
+            <img src="Foto/Logo Container.png" alt="Logo" class="logo">
+        </div>
+    </div>
+
+    <!-- Script untuk mengatur loading screen dan redirect ke login -->
+    <script>
+        // Fungsi untuk menghilangkan loading screen setelah beberapa detik
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            
+            // Redirect ke halaman login
+            window.location.href = "loginn/html/login.html";
+        }, 3000); // 3000 ms = 3 detik
+    </script>
+</body>
+</html>
