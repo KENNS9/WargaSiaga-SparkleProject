@@ -21,6 +21,18 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
     .catch((error) => console.error("Error loading navbar:", error));
+  
+  fetch("navbar_admin.html")
+    .then((response) => response.text())
+    .then((data) => {
+      const navbar = document.getElementById("navbar_admin");
+      if (navbar) {
+        navbar.innerHTML = data;
+      } else {
+        console.warn("Navbar element not found");
+      }
+    })
+    .catch((error) => console.error("Error loading navbar:", error));
 
   fetch("footer.html")
     .then((response) => response.text())

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warga Siaga Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="jadwal_admin.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="footer.css">
+    <script src="script.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+</head>
+
+<body>
+    <div id="navbar_admin"></div>
+
+    <div class="table-container">
+        <div class="table-text">
+            <h1>Jadwal Ronda</h1>
+        </div>
+        <div class="item">
+            <div class="pos-nav">
+                <button id="prev-pos">&lt;</button>
+                <span id="current-pos"></span>
+                <button id="next-pos">&gt;</button>
+            </div>
+            <button class="btn-add">+ Tambah Petugas</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Status</th>
+                    <th>Tanggal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Bapak Aji</td>
+                    <td><span class="status not-started">Belum dimulai</span></td>
+                    <td>30-10-2024</td>
+                    <td>
+                        <button class="btn btn-delete"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Bapak Budi</td>
+                    <td><span class="status in-progress">Sedang Berlangsung</span></td>
+                    <td>28-10-2024</td>
+                    <td>
+                        <button class="btn btn-delete"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Bapak Joko</td>
+                    <td><span class="status completed">Selesai</span></td>
+                    <td>27-10-2024</td>
+                    <td>
+                        <button class="btn btn-delete"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Bapak Andi</td>
+                    <td><span class="status completed">Selesai</span></td>
+                    <td>26-10-2024</td>
+                    <td>
+                        <button class="btn btn-delete"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="footer-placeholder"></div>
+
+    <div id="popup" class="popup-container">
+        <div class="popup-content">
+            <h2>Tambah Petugas</h2>
+            <form>
+                <div class="form-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" placeholder="Masukkan Nama" required>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" id="tanggal" required>
+                </div>
+                <div class="form-group">
+                    <label for="lokasi-pos">Lokasi Pos</label>
+                    <input type="text" id="lokasi-pos" placeholder="Contoh: Pos 1" required>
+                </div>
+                <button type="submit" class="btn-save">Simpan</button>
+                <button type="button" class="btn-cancel" id="close-popup">Batal</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-popup" class="popup-container">
+        <div class="popup-contentdel">
+            <h2>Hapus Jadwal</h2>
+            <p>Jadwal yang telah dihapus tidak dapat dikembalikan.</p>
+            <div class="popup-actions">
+                <button id="confirm-delete" class="btn-delete-confirm">Hapus</button>
+                <button id="cancel-delete" class="btn-cancel">Batalkan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-popup" class="popup-container">
+        <div class="popup-contentedit">
+            <h2>Edit Petugas</h2>
+            <form id="edit-form">
+                <div>
+                    <label for="edit-name">Nama</label>
+                    <input type="text" id="edit-name" placeholder="Masukkan Nama">
+                </div>
+                <div>
+                    <label for="edit-date">Tanggal</label>
+                    <input type="text" id="edit-date" placeholder="HH/BB/TTTT">
+                </div>
+                <div>
+                    <label for="edit-location">Lokasi Pos</label>
+                    <input type="text" id="edit-location" placeholder="Contoh: Pos 1">
+                </div>
+                <div class="popup-actions">
+                    <button type="button" id="save-edit" class="btn-save">Simpan</button>
+                    <button type="button" id="cancel-edit" class="btn-cancel">Batalkan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tambahkan kode JavaScript popup yang telah dijelaskan
+        const popup = document.getElementById("popup");
+        const btnAdd = document.querySelector(".btn-add");
+        const closePopup = document.getElementById("close-popup");
+
+        btnAdd.addEventListener("click", () => {
+            popup.style.display = "flex";
+        });
+
+        closePopup.addEventListener("click", () => {
+            popup.style.display = "none";
+        });
+
+        popup.addEventListener("click", (event) => {
+            if (event.target === popup) {
+                popup.style.display = "none";
+            }
+        });
+
+        const deletePopup = document.getElementById("delete-popup");
+        const deleteButtons = document.querySelectorAll(".btn-delete");
+        const cancelDelete = document.getElementById("cancel-delete");
+        const confirmDelete = document.getElementById("confirm-delete");
+
+        deleteButtons.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                deletePopup.style.display = "flex"; 
+            });
+        });
+
+        cancelDelete.addEventListener("click", () => {
+            deletePopup.style.display = "none"; // Sembunyikan popup
+        });
+
+        deletePopup.addEventListener("click", (event) => {
+            if (event.target === deletePopup) {
+                deletePopup.style.display = "none";
+            }
+        });
+
+        confirmDelete.addEventListener("click", () => {
+            // Tambahkan logika untuk menghapus data (opsional)
+            alert("Jadwal berhasil dihapus!");
+            deletePopup.style.display = "none"; // Sembunyikan popup setelah konfirmasi
+        });
+
+        const editPopup = document.getElementById("edit-popup");
+        const editButtons = document.querySelectorAll(".btn-edit"); // Semua tombol Edit
+        const cancelEdit = document.getElementById("cancel-edit");
+        const saveEdit = document.getElementById("save-edit");
+
+        // Elemen input di dalam form
+        const editName = document.getElementById("edit-name");
+        const editDate = document.getElementById("edit-date");
+        const editLocation = document.getElementById("edit-location");
+
+        editButtons.forEach((btn) => {
+            btn.addEventListener("click", (event) => {
+                const row = event.target.closest("tr"); // Ambil baris tabel yang diklik
+                const name = row.cells[1].textContent; // Ambil data nama
+                const date = row.cells[3].textContent; // Ambil data tanggal
+                const location = "Pos 1"; // Sesuaikan jika lokasi tersedia di data
+
+                // Isi form dengan data
+                editName.value = name;
+                editDate.value = date;
+                editLocation.value = location;
+
+                // Tampilkan popup
+                editPopup.style.display = "flex";
+            });
+        });
+
+        // Fungsi untuk menyembunyikan popup edit
+        cancelEdit.addEventListener("click", () => {
+            editPopup.style.display = "none";
+        });
+
+        // Fungsi untuk menyimpan perubahan
+        saveEdit.addEventListener("click", () => {
+            // Lakukan logika penyimpanan (opsional, tergantung backend atau data management Anda)
+            alert("Perubahan berhasil disimpan!");
+
+            // Sembunyikan popup
+            editPopup.style.display = "none";
+        });
+    </script>
+</body>
+
+</html>
